@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TDC;
 use App\Http\Resources\TDCResource;
+use App\Models\Client;
 use Illuminate\Support\Facades\Validator;
 
 class TDCController extends Controller
@@ -56,7 +57,8 @@ class TDCController extends Controller
             'pin' => $request->pin,
             'valid_date' => $request->valid_date,
             'balance' => 0,
-            'status' => $status
+            'status' => $status,
+            'client_id' => $request->client_id
         ]);
         
         return response()->json(new TDCResource($tdc));
@@ -71,7 +73,8 @@ class TDCController extends Controller
     public function show($id)
     {
         $tdc = TDC::where('id',$id)->get();
-        return response()->json($tdc);
+        $client = Client::where('id',$tdc[0]->client_id)->get();
+        return response()->json(['tdc' => $tdc,'client' => $client[0]->name]);
     }
 
     /**

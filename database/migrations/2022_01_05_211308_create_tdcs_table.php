@@ -20,7 +20,9 @@ class CreateTDCSTable extends Migration
             $table->string('valid_date',4);
             $table->float('balance',12,2);
             $table->boolean('status');
+            $table->unsignedBigInteger('client_id');
             $table->timestamps();
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
         });
     }
 

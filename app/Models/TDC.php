@@ -13,6 +13,14 @@ class TDC extends Model
         'pin',
         'valid_date',
         'balance',
-        'status'
+        'status',
+        'client_id'
     ];
+
+    /**
+     * Get the client that owns the tdc.
+     */
+    public function client(){
+        return $this->belongsTo(Client::class);
+    }
 }
